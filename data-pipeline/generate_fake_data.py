@@ -1,6 +1,7 @@
-from google.cloud import bigquery
+from google.cloud import storage
 from faker import Faker
 import os
+import csv 
 
 def generate_fake_data(num_rows=1000):
     """_summary_
@@ -26,31 +27,37 @@ def generate_fake_data(num_rows=1000):
         })
     return data
 
-def upload_fake_data_to_bigquery(data):
-    client = bigquery.Client()
-    dataset_id = os.environ['DATASET_ID']
-    table_id = f"{dataset_id}.raw_table"
+def save_data_to_csv(data, file_path):
+    """Save data to a CSV file.
 
-    schema = [
-        bigquery.SchemaField("name", "STRING"),
-        bigquery.SchemaField("address", "STRING"),
-        bigquery.SchemaField("email", "STRING"),
-        bigquery.SchemaField("phone_number", "STRING"),
-        bigquery.SchemaField("birthdate", "DATE"),
-        bigquery.SchemaField("location", "STRING"),
-        bigquery.SchemaField("salary", "INTEGER")
-    ]
+    Args:
+        data (list): A list of dictionaries containing the data to save.
+        file_path (str): The file path where the CSV should be saved.
+    """
+    with open(file_path, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
 
-    table = bigquery.Table(table_id, schema=schema)
-    table = client.create_table(table, exists_ok=True)
+def upload_file_to_gcs(file_path, bucket_name, destination_blob_name):
+    """Upload a file to Google Cloud Storage.
 
-    errors = client.insert_rows_json(table, data)
+    Args:
+        file_path (str): The path to the file to upload.
+        bucket_name (str): The name of the GCS bucket.
+        destination_blob_name (str): The destination blob name in the GCS bucket.
+    """
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
 
-    if errors:
-        raise Exception(f"Errors occured while inserting rows: {errors}")
+    blob.upload_from_filename(file_path)
+
+    print(f"File {file_path} uploaded to {destination_blob_name}.")
     
 if __name__ == "__main__":
-    num_rows = int(os.getenv('NUM_ROWS', '1000'))
-    fake_date = generate_fake_data
-    upload_fake_data_to_bigquery()
+    local_temp_path = "/tmp/employee_data.csv"
+    fake_data = generate_fake_data()
+    save_data_to_csv(fake_data, local_temp_path)
+    upload_file_to_gcs(local_temp_path, "employee_bucket_demo", "employee_data")
 

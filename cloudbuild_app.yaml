@@ -1,21 +1,12 @@
 steps:
-  # Set up Cloud SDK and fetch secrets from Secret Manager
-  - name: "hashicorp/terraform:1.0.0" # Use the official Terraform image
-    args: ["init"]
-    dir: "infrastructure/"
+  # Step 1: Generate fake data
+  - name: "python:3.9"
+    entrypoint: "python"
+    args:
+      - "generate_fake_data.py"
 
-  - name: "hashicorp/terraform:1.0.0" # Use the official Terraform image
-    args: ["plan"]
-    dir: "infrastructure/"
-
-  - name: "hashicorp/terraform:1.0.0"
-    args: ["apply", "-auto-approve"]
-    dir: "infrastructure/"
-    env: # Define environment variables here
-      PROJECT_ID: $(PROJECT_ID) # Access secrets previously fetched
-      REGION: $(REGION)
-      BUCKET_NAME: $(BUCKET_NAME)
-      BUCKET_LOCATION: $(BUCKET_LOCATION)
-      DATASET_ID: $(DATASET_ID)
-      DATASET_LOCATION: $(DATASET_LOCATION)
-      TABLE_ID: $(TABLE_ID)
+  # Step 2: Process and create table in BigQuery
+  - name: "python:3.9"
+    entrypoint: "python"
+    args:
+      - "transform_data.py"

@@ -1,11 +1,23 @@
 steps:
-  - name: 'gcr.io/cloud-builders/terraform'
-    args: ['init']
-    dir: 'infrastructure/'
-  
-  - name: 'gcr.io/cloud-builders/terraform'
-    args: ['apply', '-auto-approve']
-    dir: 'infrastructure/'
+  # Set up Cloud SDK and fetch secrets from Secret Manager
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo "export PROJECT_ID=$(gcloud secrets versions access latest --secret=project_id)" >> ~/.bashrc
+        echo "export REGION=$(gcloud secrets versions access latest --secret=region)" >> ~/.bashrc
+        echo "export BUCKET_NAME=$(gcloud secrets versions access latest --secret=bucket_name)" >> ~/.bashrc
+        echo "export BUCKET_LOCATION=$(gcloud secrets versions access latest --secret=bucket_location)" >> ~/.bashrc
+        echo "export DATASET_ID=$(gcloud secrets versions access latest --secret=dataset_id)" >> ~/.bashrc
+        echo "export DATASET_LOCATION=$(gcloud secrets versions access latest --secret=dataset_location)" >> ~/.bashrc
+        echo "export TABLE_ID=$(gcloud secrets versions access latest --secret=table_id)" >> ~/.bashrc
 
-substitutions:
-  _PROJECT_ID: 
+  # Run Terraform commands
+  - name: "gcr.io/cloud-builders/terraform"
+    args: ["init"]
+    dir: "infrastructure/"
+
+  - name: "gcr.io/cloud-builders/terraform"
+    args: ["apply", "-auto-approve"]
+    dir: "infrastructure/"

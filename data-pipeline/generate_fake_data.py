@@ -2,6 +2,7 @@ from google.cloud import storage
 from faker import Faker
 import os
 import csv 
+import random
 
 def generate_fake_data(num_rows=1000):
     """_summary_
@@ -13,6 +14,8 @@ def generate_fake_data(num_rows=1000):
 
     """
     fake = Faker()
+    
+    cities = [fake.city() for _ in range(20)]
     data = []
 
     for _ in range(num_rows):
@@ -22,7 +25,7 @@ def generate_fake_data(num_rows=1000):
             "email": fake.email(),
             "phone_number": fake.phone_number(),
             "birthdate": fake.date_of_birth().isoformat(),
-            "location": fake.city(),
+            "location": random.choice(cities),
             "salary": fake.random_number(digits=5, fix_len=True)
         })
     return data

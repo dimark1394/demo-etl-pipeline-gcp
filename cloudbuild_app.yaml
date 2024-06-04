@@ -8,6 +8,7 @@ steps:
         pip install -r requirements.txt
         pip install --upgrade pip
         python data-pipeline/generate_fake_data.py
+        python data-pipeline/upload_to_bigquery.py
         python data-pipeline/transform_data.py
 
 options:

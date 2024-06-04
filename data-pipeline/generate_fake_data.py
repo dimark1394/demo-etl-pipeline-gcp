@@ -4,7 +4,7 @@ import os
 import csv 
 import random
 
-def generate_fake_data(num_rows=1):
+def generate_fake_data(num_rows=10000):
     """_summary_
 
     Args:
@@ -39,7 +39,7 @@ def save_data_to_csv(data, file_path):
     """
     for row in data:
         row['address'] = row['address'].replace('\n', '')
-        
+
     with open(file_path, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter= ",")
         writer.writeheader()

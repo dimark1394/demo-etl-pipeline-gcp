@@ -1,6 +1,14 @@
 from google.cloud import bigquery
 
 def upload_to_bigquery(bucket_name, blob_name, dataset_id, table_id):
+    """_summary_
+
+    Args:
+        bucket_name (str): The name of the GCS bucket.
+        blob_name (str): The destination blob name in the GCS bucket.
+        dataset_id (str): ID of the BigQuery dataset.
+        table_id (str): ID of the raw data table.
+    """
     client = bigquery.Client()
 
     dataset_ref = client.dataset(dataset_id)

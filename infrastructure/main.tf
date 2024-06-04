@@ -1,11 +1,11 @@
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project = "etl-pi"
+  region  = "europe-west4"
 }
 
 resource "google_storage_bucket" "employee_bucket" {
-  name     = var.bucket_name
-  location = var.bucket_location
+  name     = "employee_bucket_demo"
+  location = "EUROPE-WEST$"
 }
 
 data "local_file" "schema" {
@@ -17,13 +17,13 @@ locals {
 }
 
 resource "google_bigquery_dataset" "employee_dataset" {
-  dataset_id = var.dataset_id
-  location   = var.dataset_location
+  dataset_id = "employee_dataset"
+  location   = "EU"
 }
 
 resource "google_bigquery_table" "raw_data" {
   dataset_id = google_bigquery_dataset.employee_dataset.dataset_id
-  table_id   = var.table_id
+  table_id   = "raw_data_table"
   schema = {
     fields = local.raw_data_schema
   }

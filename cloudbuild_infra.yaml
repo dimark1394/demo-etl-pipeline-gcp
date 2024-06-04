@@ -16,3 +16,7 @@ steps:
   - name: "hashicorp/terraform:1.0.0" # Use the official Terraform image
     args: ["init"]
     dir: "infrastructure/"
+
+  - name: "hashicorp/terraform:1.0.0" # Use the official Terraform image
+    args: ["apply"]
+    dir: "infrastructure/"

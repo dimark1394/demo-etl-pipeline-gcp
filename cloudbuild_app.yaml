@@ -3,13 +3,13 @@ steps:
   - name: "python:3.9"
     entrypoint: "python"
     args:
-      - "generate_fake_data.py"
+      - "data-pipeline/generate_fake_data.py"
 
   # Step 2: Process and create table in BigQuery
   - name: "python:3.9"
     entrypoint: "python"
     args:
-      - "transform_data.py"
+      - "data-pipeline/transform_data.py"
 
 options:
   logging: CLOUD_LOGGING_ONLY

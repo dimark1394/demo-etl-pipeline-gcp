@@ -9,5 +9,6 @@ steps:
         python data-pipeline/generate_fake_data.py
         python data-pipeline/transform_data.py
 
+        
  options:
   logging: CLOUD_LOGGING_ONLY

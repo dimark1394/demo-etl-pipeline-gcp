@@ -4,7 +4,7 @@ import os
 import csv 
 import random
 
-def generate_fake_data(num_rows=1000):
+def generate_fake_data(num_rows=1):
     """_summary_
 
     Args:

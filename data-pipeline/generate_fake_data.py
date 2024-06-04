@@ -37,6 +37,9 @@ def save_data_to_csv(data, file_path):
         data (list): A list of dictionaries containing the data to save.
         file_path (str): The file path where the CSV should be saved.
     """
+    for row in data:
+        row['address'] = row['address'].replace('\n', '')
+        
     with open(file_path, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter= ",")
         writer.writeheader()

@@ -1,0 +1,7 @@
+project_id       = "etl-pi"
+region           = "europe-west4"
+bucket_name      = "employee_bucket_demo"
+bucket_location  = "EUROPE-WEST4"
+dataset_id       = "employee_dataset"
+dataset_location = "EU"
+table_id         = "raw_data_table"

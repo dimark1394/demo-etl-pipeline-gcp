@@ -1,7 +1,7 @@
 output "bucket_name" {
-  value = google_storage_bucket.data_lake.name
+  value = google_storage_bucket.employee_bucket.name
 }
 
 output "dataset_id" {
-  value = google_bigquery_dataset.data_warehouse.dataset_id
+  value = google_bigquery_dataset.employee_dataset.dataset_id
 }

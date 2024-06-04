@@ -24,7 +24,5 @@ resource "google_bigquery_dataset" "employee_dataset" {
 resource "google_bigquery_table" "raw_data" {
   dataset_id = google_bigquery_dataset.employee_dataset.dataset_id
   table_id   = var.table_id
-  schema = {
-    fields = local.raw_data_schema
-  }
+  schema     = data.local_file.schema.content
 }

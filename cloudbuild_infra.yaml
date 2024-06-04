@@ -1,0 +1,11 @@
+steps:
+  - name: 'gcr.io/cloud-builders/terraform'
+    args: ['init']
+    dir: 'infrastructure/'
+  
+  - name: 'gcr.io/cloud-builders/terraform'
+    args: ['apply', '-auto-approve']
+    dir: 'infrastructure/'
+
+substitutions:
+  _PROJECT_ID: 

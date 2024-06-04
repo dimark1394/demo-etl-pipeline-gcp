@@ -1,0 +1,33 @@
+steps:
+  - name: 'gcr.io/cloud-builders/pip'
+    args: ['install', '-r', 'requirements.txt']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Uploading raw_data.csv to Cloud Storage"
+        gsutil cp datasets/raw_data.csv gs://$BUCKET_NAME/
+
+  - name: 'python'
+    entrypoint: 'python3'
+    args: ['data-pipeline/load_raw_data.py']
+    env:
+      - 'BUCKET_NAME=$BUCKET_NAME'
+      - 'DATASET_ID=$DATASET_ID'
+      - 'PROJECT_ID=$PROJECT_ID'
+
+  - name: 'python'
+    entrypoint: 'python3'
+    args: ['data-pipeline/transform_data.py']
+    env:
+      - 'DATASET_ID=$DATASET_ID'
+      - 'PROJECT_ID=$PROJECT_ID'
+
+substitutions:
+  _BUCKET_NAME: 'your-bucket-name'
+  _PROJECT_ID: 'your-project-id'
+  _DATASET_ID: 'my_dataset'
+
+timeout: '1200s'

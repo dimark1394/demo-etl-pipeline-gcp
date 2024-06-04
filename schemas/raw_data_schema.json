@@ -1,0 +1,36 @@
+[
+    {
+      "name": "name",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "address",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "email",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "phone_number",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "birthdate",
+      "type": "DATE",
+      "mode": "NULLABLE"
+    },
+    {
+      "name": "location",
+      "type": "STRING",
+      "mode": "NULLABLE"
+    },
+    { "name": "salary",
+      "type": "INTEGER",
+      "mode": "NULLABLE"
+    }
+  ]

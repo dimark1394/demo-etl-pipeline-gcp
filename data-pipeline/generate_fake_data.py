@@ -22,7 +22,7 @@ def generate_fake_data(num_rows=1000):
             "email": fake.email(),
             "phone_number": fake.phone_number(),
             "birthdate": fake.date_of_birth().isoformat(),
-            "location": fake.city,
+            "location": fake.city(),
             "salary": fake.random_number(digits=5, fix_len=True)
         })
     return data
@@ -59,5 +59,5 @@ if __name__ == "__main__":
     local_temp_path = "/tmp/employee_data.csv"
     fake_data = generate_fake_data()
     save_data_to_csv(fake_data, local_temp_path)
-    upload_file_to_gcs(local_temp_path, "employee_bucket_demo", "employee_data")
+    upload_file_to_gcs(local_temp_path, "employee_bucket_demo", "employee_data.csv")
 

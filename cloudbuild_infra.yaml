@@ -12,3 +12,7 @@ steps:
         echo "export DATASET_ID=$(gcloud secrets versions access latest --secret=dataset_id)" >> ~/.bashrc
         echo "export DATASET_LOCATION=$(gcloud secrets versions access latest --secret=dataset_location)" >> ~/.bashrc
         echo "export TABLE_ID=$(gcloud secrets versions access latest --secret=table_id)" >> ~/.bashrc
+
+  - name: "hashicorp/terraform:1.0.0" # Use the official Terraform image
+    args: ["init"]
+    dir: "infrastructure/"

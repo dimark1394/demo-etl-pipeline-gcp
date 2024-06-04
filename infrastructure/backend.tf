@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = var.tf_state_bucket_name
+    bucket = "tf_state_bucket_demo"
     prefix = "terraform/state"
   }
 }

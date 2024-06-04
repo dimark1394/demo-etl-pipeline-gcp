@@ -1,24 +1,10 @@
 steps:
-  # Step 1: Install python packages
-  - id: "install python packages"
+  - id: "data pipeline"
     name: "python:3.9"
-    entrypoint: "pip"
-    args: ["install", "-r", "requirements.txt"]
-
-  # Step 2: Generate fake data
-  - name: "python:3.9"
-    entrypoint: "python"
+    entrypoint: "bash"
     args:
-      - "data-pipeline/generate_fake_data.py"
-
-  # Step 3: Process and create table in BigQuery
-  - name: "python:3.9"
-    entrypoint: "python"
-    args:
-      - "data-pipeline/transform_data.py"
-
-options:
-  logging: CLOUD_LOGGING_ONLY
-  cache:
-    paths:
-      - "/root/.local"
+      - "-c"
+      - |
+        pip install -r requirements.txt
+        python data-pipeline/generate_fake_data.py
+        python data-pipeline/transform_data.py

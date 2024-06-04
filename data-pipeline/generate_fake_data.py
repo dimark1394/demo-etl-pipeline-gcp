@@ -38,7 +38,7 @@ def save_data_to_csv(data, file_path):
         file_path (str): The file path where the CSV should be saved.
     """
     with open(file_path, mode='w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+        writer = csv.DictWriter(file, fieldnames=data[0].keys(), delimiter= ",")
         writer.writeheader()
         writer.writerows(data)
 

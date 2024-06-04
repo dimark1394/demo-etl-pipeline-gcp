@@ -1,11 +1,17 @@
 steps:
-  # Step 1: Generate fake data
+  # Step 1: Install python packages
+  - id: "install python packages"
+    name: "python:3.9"
+    entrypoint: "pip"
+    args: ["install", "-r", "requirements.txt"]
+
+  # Step 2: Generate fake data
   - name: "python:3.9"
     entrypoint: "python"
     args:
       - "data-pipeline/generate_fake_data.py"
 
-  # Step 2: Process and create table in BigQuery
+  # Step 3: Process and create table in BigQuery
   - name: "python:3.9"
     entrypoint: "python"
     args:

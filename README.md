@@ -18,17 +18,23 @@ The concept of this data engineering project is to create an ETL pipeline and th
 
 The fun thing is that all of the above are written in Python while also utilizing the ability of Cloud Build to create containers that are connected to our GCP platform and run our code through there.
 
+The terraform pipeline deploys the following:
+
+- A GCS bucket to store our raw data.
+- A Bigquery instance, a dataset and a table for the raw with the appropriate schema which is inferred during deployment through Terraform.
+
 ## Steps to recreate the project
 
-The data flow of the project consists of the following steps.
+To recreate the project follow the steps below:
 
 1. First we need to create our Cloud Build instance and enable the APIs such as (BigQuery).
 2. Then we need to create a service principal with the necessary roles to handle the creation of BigQuery tables, buckets, etc.
-3. After that we set up triggers in which we connect our github to Cloud Studio, and trigger them through pushes to the code we do in a specific branch (infra branch for infrastructure code, data-pipeline for Python code).
+3. To save the state of our infrastructure we create a bucket with a custom name and make sure to update appropriately this [file](https://github.com/dimark1394/demo-etl-pipeline-gcp/blob/main/infrastructure/backend.tf) with the name of the bucket you create.
+4. After that we set up triggers in which we connect our github to Cloud Build, and trigger them through pushes to the code we do in a specific branch (infra branch for infrastructure code, data-pipeline for Python code).
 
 ## Benefits of this architecture
 
-There many benefits for this type of architecture
+There are many benefits for this type of architecture
 
 1. Seperate pipelines for the deployment of infra and Python code.
 2. No need to set up complicated things. It just works!
@@ -42,3 +48,4 @@ Of course the some many limitations as well
 1. Security: While not unsecure as everything is behind your GCP some variables are hardcoded for the purposes of the demonstration (like GCS blobs uris, dasaset names, etc.) This can be fixed by passing values to them through Secret Manager or similar tools.
 2. Limitations of cloud build for the process of large files.
 3. Cost? Maybe if our pipelines take too long to deploy we are going to have some issues with it.
+4. We can improve further the data pipeline by using Dataflow instead of deploying our Python code through containers (to be continued).

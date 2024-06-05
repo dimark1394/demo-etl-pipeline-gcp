@@ -43,9 +43,9 @@ There are many benefits for this type of architecture
 
 ## Limitations
 
-Of course the some many limitations as well
+Of course the are some many limitations as well
 
 1. Security: While not unsecure as everything is behind your GCP some variables are hardcoded for the purposes of the demonstration (like GCS blobs uris, dasaset names, etc.) This can be fixed by passing values to them through Secret Manager or similar tools.
 2. Limitations of cloud build for the process of large files.
 3. Cost? Maybe if our pipelines take too long to deploy we are going to have some issues with it.
-4. We can improve further the data pipeline by using Dataflow instead of deploying our Python code through containers (to be continued).
+4. We can improve further the data pipeline by using Dataflow instead of implementing our Python logic code through containers (to be continued).
